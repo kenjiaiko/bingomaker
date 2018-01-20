@@ -7,3 +7,5 @@
 * write "pics/" dir path to status.json (in challenge/)
 ## checker
 * write bingo.cgi path to status.json (in checker/)
+* arg[1] of checker.py is IP address
+* arg[2] of checker.py is value of num of the URL.
