@@ -1,1 +1,3 @@
 # bingomaker
+challenge/
+  aaa
