@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 USER_TIMEOUT   = 5.0
-SYSTEM_TIMEOUT = 1.0
+SYSTEM_TIMEOUT = 10.0
 
 import sys
 import os
