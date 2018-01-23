@@ -11,4 +11,4 @@ bingomaker is one of the hacking game to speed up Web service.
 * write bingo.cgi path to status.json (in checker/)
 * arg[1] of checker.py is IP address
 * arg[2] of checker.py is the num of bingo images you want to create
-* printed value executing checker.py, is a response time of the service
+* printed value for executing checker.py, is a response time of the service
