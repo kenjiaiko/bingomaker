@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+USER_TIMEOUT   = 5.0
+SYSTEM_TIMEOUT = 1.0
+
 import sys
 import os
 import json
@@ -29,23 +32,24 @@ def is_same(a, pos_h, pos_w, b):
 	return diff
 
 def get_data_from_users(n, ip, limi):
+	imgs = []
 	status = json.loads(open("status.json").read())
 	a = time.time()
-	r = requests.get("http://" + ip + "/" + status["cgi_path"] + "?num=" + str(n), timeout=limi)
+	r = requests.get("http://" + ip + "/" + status["cgi_path"] + "?num=" + str(n))
 	d = r.json()
 	if len(d["data"]) != n:
 		return None
 	random.shuffle(d["data"])
 	i = 0
 	for v in d["data"]:
-		r = requests.get("http://" + ip + "/" + v["url"] + "/305.jpg", timeout=limi)
+		r = requests.get("http://" + ip + "/" + v["url"] + "/305.jpg")
 		if i < 100:
 			imgs.append( [cv2.imdecode(np.asarray(bytearray(r.content), dtype=np.uint8), -1), v["data"]] )
 		i += 1
 	b = time.time() - a
 	return (b, imgs)
 
-def check1(db, imgs, the_numbers):
+def check1(db, imgs, the_numbers, ip):
 	bl = []
 	ck = []
 	for (img, b) in imgs:
@@ -68,7 +72,7 @@ def check1(db, imgs, the_numbers):
 
 def check2(imgs, nums):
 	for (img, b) in imgs:
-		pos = random.randint(0, 25)
+		pos = random.randint(0, 24)
 		if 50000 < is_same(img, (pos / 5) + 1, (pos % 5), nums[b[pos]]):
 			return 3001.0
 	return None
@@ -78,12 +82,17 @@ def error(r, db=None):
 		db.close()
 	return r
 
+def timeout(msg):
+	failed(9998.0)
+
+from pytimeout import on_timeout
+@on_timeout(limit=SYSTEM_TIMEOUT, handler=timeout)
 def main(n, ip):
 	path = "numbers/"
 	#
 	# get a data from user's server
 	#
-	r = get_data_from_users(n, ip, 5.0)
+	r = get_data_from_users(n, ip, 10.0)
 	if r == None:
 		return 1001.0
 	(result, imgs) = r
@@ -97,7 +106,7 @@ def main(n, ip):
 	the_numbers.setdefault(99, 0)
 	# check1
 	db = pysql.sql("bingo.db")
-	r = check1(db, imgs, the_numbers)
+	r = check1(db, imgs, the_numbers, ip)
 	if type(r) == float:
 		return error(r, db)
 	db_update_data = r
@@ -114,6 +123,14 @@ def main(n, ip):
 	db.close()
 	return result
 
+def failed(sflag):
+	print "failed", sflag
+	sys.exit()
+
+def success(sflag):
+	print "success", sflag
+	sys.exit()
+
 def test(count, limit_time, ip, test_flag=True):
 	if test_flag == True:
 		sflag = main(count, ip)
@@ -121,15 +138,14 @@ def test(count, limit_time, ip, test_flag=True):
 		try:
 			sflag = main(count, ip)
 		except:
-			sflag = 997.0
+			sflag = 9999.0
 	if limit_time < sflag:
-		print "failed",
+		failed(sflag)
 	else:
-		print "success",
-	print sflag
+		success(sflag)
 
 if __name__ == '__main__':
 	teamip= sys.argv[1]
 	count = int(sys.argv[2])
-	test(count, 5.0, teamip, False)
+	test(count, USER_TIMEOUT, teamip, False)
 
