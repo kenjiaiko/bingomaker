@@ -9,5 +9,5 @@
 ## checker
 * write bingo.cgi path to status.json (in checker/)
 * arg[1] of checker.py is IP address
-* arg[2] of checker.py is value of num of the URL
-* printed value executing checker.py, is a response time the service
+* arg[2] of checker.py is the num of bingo images you want to create
+* printed value executing checker.py, is a response time of the service
