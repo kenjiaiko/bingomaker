@@ -1,4 +1,4 @@
 {
-	"local_pics_path": "/var/www/html/pics/",
+	"local_pics_path": "/home/pi/challenge/pics/",
 	"web_pics_path": "pics/"
 }
