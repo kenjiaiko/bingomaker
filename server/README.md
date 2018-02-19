@@ -1,3 +1,4 @@
+# cron setting
 ```
 */1 * * * * /usr/bin/python /home/ubuntu/bingom_checker/checker.py 192.168.1.254
 */1 * * * * /usr/bin/python /home/ubuntu/bingom_checker/checker.py 192.168.2.254
