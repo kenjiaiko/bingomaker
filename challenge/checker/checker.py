@@ -37,8 +37,8 @@ def main(ip):
 		print "success"
 
 if __name__ == '__main__':
-	#sys.argv[1] = ip address
-	i = 100
+	# sys.argv[1] = ip address
+	i = 5
 	while 0 < i:
 		main(sys.argv[1])
 		i -= 1
