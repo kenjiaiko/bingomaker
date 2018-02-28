@@ -1,4 +1,4 @@
-# how to setup Web service
+# how to setup web service
 ## bingo server
 ```
 $ git clone https://github.com/kenjiaiko/bingomaker
