@@ -190,6 +190,9 @@ if __name__ == '__main__':
 	teamip   = sys.argv[1]
 	g_teamip = sys.argv[1]
 	count    = 100
+	if teamip == "localhost":
+		test(count, USER_TIMEOUT, teamip, True)
+		sys.exit()
 	execpath = "exec/" + teamip
 	try:
 		data = open(execpath).read()
