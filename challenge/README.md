@@ -1,4 +1,4 @@
-# how to setup for challengers
+# how to setup Web service
 ## bingo server
 ```
 $ git clone https://github.com/kenjiaiko/bingomaker
