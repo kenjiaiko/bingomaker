@@ -25,4 +25,4 @@ Each team have unique team ID (ex:1,2,3,4,....,15), it is tied to IP address. Pl
 */1 * * * * /usr/bin/python server/checker.py 192.168.15.254
 */5 * * * * /usr/bin/python server/top_checker.py
 ```
-checker.py will access to the service with the IP address, if there is a file with the "IP address name" under exec/. 
+checker.py will access to the service with the IP address, if there is a file with the "IP address name" under exec/. index.cgi make a file to in exec/.
